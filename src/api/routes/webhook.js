@@ -1,6 +1,6 @@
 const crypto = require('crypto');
-import  PaystackService from '../../services/paystackService';
-import WalletService from  '../../services/walletService';
+const  PaystackService = require('../../services/paystackService');
+const WalletService = require('../../services/walletService');
 
 module.exports = async (req, res) => {
   // Only accept POST requests

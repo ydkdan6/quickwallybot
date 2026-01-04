@@ -45,7 +45,7 @@ async function handleStart(bot, msg) {
           inline_keyboard: [[
             {
               text: 'Register Now',
-              web_app: { url: `https://quickwallybot.vercel.app/register?telegram_id=${telegramId}` }
+              web_app: { url: `https://quickwallybotty.vercel.app/index.html?telegram_id=${telegramId}` }
             }
           ]]
         }

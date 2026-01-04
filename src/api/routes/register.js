@@ -1,11 +1,10 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import userService from '../../services/userService';
+const UserService = require('../../services/userService');
 const { validateTelegramWebAppData } = require('../utils/telegramAuth');
 
 router.post('/', async (req, res) => {
-
-  const userServices = new userService();
+  const userServices = new UserService();
 
   try {
     const { telegram_id, full_name, email, pin, init_data } = req.body;
