@@ -1,10 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "src/api/routes/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "routes": [
     { "src": "/api/(.*)", "dest": "/src/api/routes/$1.js" },
     { "src": "/(.*)", "dest": "/webapp/$1" }
