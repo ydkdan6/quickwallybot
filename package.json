@@ -6,9 +6,7 @@
   "scripts": {
     "start": "node src/api/server.js",
     "dev": "vite",
-    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "bot": "node src/bot/index.js",
     "bot:dev": "nodemon src/bot/index.js"
