@@ -20,6 +20,7 @@ form.addEventListener('submit', async (e) => {
   const pin = document.getElementById('pin').value;
   const confirmPin = document.getElementById('confirmPin').value;
 
+  // Validation
   if (fullName.length < 2) {
     errorMessage.textContent = 'Please enter your full name';
     return;
@@ -53,16 +54,16 @@ form.addEventListener('submit', async (e) => {
         telegram_id: telegramId,
         full_name: fullName,
         email: email,
-        pin: pin,
-        init_data: tg.initData
+        pin: pin
       })
     });
 
     const data = await response.json();
 
     if (response.ok) {
-      successMessage.textContent = 'Account created successfully!';
+      successMessage.textContent = '✅ Account created successfully!';
 
+      // Send data back to Telegram bot
       tg.sendData(JSON.stringify({
         action: 'registration_complete',
         full_name: fullName
@@ -77,6 +78,7 @@ form.addEventListener('submit', async (e) => {
       submitBtn.textContent = 'Create Account';
     }
   } catch (error) {
+    console.error('Registration error:', error);
     errorMessage.textContent = 'Network error. Please check your connection.';
     submitBtn.disabled = false;
     submitBtn.textContent = 'Create Account';

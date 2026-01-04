@@ -45,7 +45,7 @@ async function handleStart(bot, msg) {
           inline_keyboard: [[
             {
               text: '✅ Register Now',
-              web_app: { url: `${process.env.WEBAPP_URL}/register?telegram_id=${telegramId}` }
+              web_app: { url: `https://quickwallybot.vercel.app/register?telegram_id=${telegramId}` }
             }
           ]]
         }
