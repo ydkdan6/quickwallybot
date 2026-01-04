@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/routes/*.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/register",
+      "dest": "/api/routes/register.js"
+    },
+    {
+      "src": "/api/verify-pin",
+      "dest": "/api/routes/verify-pin.js"
+    },
+    {
+      "src": "/api/webhook",
+      "dest": "/api/routes/webhook.js"
+    },
+    {
+      "src": "/(.*\\.(html|js|css|png|jpg|jpeg|gif|svg|ico))",
+      "dest": "/webapp/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/webapp/index.html"
+    }
+  ]
+}
