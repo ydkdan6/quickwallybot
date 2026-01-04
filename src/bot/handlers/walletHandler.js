@@ -1,6 +1,6 @@
-import userService from '../../services/userService';
-import walletService from '../../services/walletService';
-import paystackService from '../../services/paystackService';
+const userService = require('../../services/userService');
+const walletService = require('../../services/walletService');
+const paystackService = require('../../services/paystackService');
 
 const userServices = new userService();
 const walletServices = new walletService();

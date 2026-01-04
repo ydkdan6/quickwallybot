@@ -1,10 +1,7 @@
-// import userService = require('../../services/userService');
-import UserService from '../../services/userService';
-// const analyticsService = require('../../services/analyticsService');
-import AnalyticsService from '../../services/analyticsService';
+const UserService = require('../../services/userService');
+const AnalyticsService = require('../../services/analyticsService');
 
 async function handleAnalytics(bot, msg) {
-
   const userServices = new UserService();
 
   const chatId = msg.chat.id;
@@ -33,7 +30,6 @@ async function handleAnalytics(bot, msg) {
 }
 
 async function showAnalyticsSummary(bot, chatId, userId, period) {
-
   const analyticsServices = new AnalyticsService();
   
   try {
@@ -49,7 +45,7 @@ async function showAnalyticsSummary(bot, chatId, userId, period) {
 
     const message = await analyticsServices.formatSpendingSummary(summary);
 
-    await bot.sendMessage(chatId, message);
+    await bot.sendMessage(chatId, message, { parse_mode: 'Markdown' });
   } catch (error) {
     console.error('Error showing analytics:', error);
     await bot.sendMessage(chatId, 'Failed to fetch analytics. Please try again.');

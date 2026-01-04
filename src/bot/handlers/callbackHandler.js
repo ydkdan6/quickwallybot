@@ -1,5 +1,4 @@
-// import userService = require('../../services/userService');
-import UserService from '../../services/userService';
+const UserService = require('../../services/userService');
 const { handleFundWallet } = require('./walletHandler');
 const { processAirtimePurchase, processDataPurchase, showDataPlans } = require('./vtuHandler');
 const { processAirtimeSharing, saveBeneficiary } = require('./sharingHandler');
@@ -62,7 +61,7 @@ async function handleCallbackQuery(bot, query) {
                   {
                     text: '✅ Confirm & Enter PIN',
                     web_app: {
-                      url: `${process.env.WEBAPP_URL}/verify-pin?action=airtime&network=${network}&phone=${phone}&amount=${amount}&user_id=${user.id}`
+                      url: `${process.env.WEBAPP_URL}/verify-pin.html?action=airtime&network=${network}&phone=${phone}&amount=${amount}&user_id=${user.id}`
                     }
                   }
                 ]]
@@ -113,7 +112,7 @@ async function handleCallbackQuery(bot, query) {
                 {
                   text: '✅ Confirm & Enter PIN',
                   web_app: {
-                    url: `${process.env.WEBAPP_URL}/verify-pin?action=data&network=${network}&phone=${phone}&plan=${planCode}&price=${price}&user_id=${user.id}`
+                    url: `${process.env.WEBAPP_URL}/verify-pin.html?action=data&network=${network}&phone=${phone}&plan=${planCode}&price=${price}&user_id=${user.id}`
                   }
                 }
               ]]
@@ -183,7 +182,7 @@ async function handleCallbackQuery(bot, query) {
                   {
                     text: '✅ Confirm & Enter PIN',
                     web_app: {
-                      url: `${process.env.WEBAPP_URL}/verify-pin?action=share&network=${network}&phone=${phone}&amount=${amount}&user_id=${user.id}`
+                      url: `${process.env.WEBAPP_URL}/verify-pin.html?action=share&network=${network}&phone=${phone}&amount=${amount}&user_id=${user.id}`
                     }
                   }
                 ]]
@@ -224,7 +223,7 @@ async function handleCallbackQuery(bot, query) {
                 {
                   text: '✅ Confirm & Enter PIN',
                   web_app: {
-                    url: `${process.env.WEBAPP_URL}/verify-pin?action=share&network=${network}&phone=${phone}&amount=${amount}&user_id=${user.id}`
+                    url: `${process.env.WEBAPP_URL}/verify-pin.html?action=share&network=${network}&phone=${phone}&amount=${amount}&user_id=${user.id}`
                   }
                 }
               ]]

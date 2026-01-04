@@ -1,5 +1,5 @@
-import userService from '../../services/userService';
-import walletService from '../../services/walletService';
+const userService = require('../../services/userService');
+const walletService = require('../../services/walletService');
 
 const userServices = new userService();
 const walletServices = new walletService();

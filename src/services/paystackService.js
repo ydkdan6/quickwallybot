@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { createClient } from '@supabase/supabase-js';
-import { nanoid } from 'nanoid';
+const axios = require('axios');
+const { createClient } = require('@supabase/supabase-js');
+const { nanoid } = require('nanoid');
 
 class PaystackService {
   constructor() {

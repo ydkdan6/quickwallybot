@@ -1,11 +1,11 @@
-import axios from 'axios';
+const axios = require('axios');
 const crypto = require('crypto');
 require('dotenv').config();
 
 class TranzitPayService {
   constructor() {
     this.apiKey = process.env.TRANZITPAY_API_KEY;
-    this.baseUrl = 'https://api.tranzit.com.ng'; // ✅ Correct URL
+    this.baseUrl = 'https://api.tranzit.com.ng';
   }
 
   /**

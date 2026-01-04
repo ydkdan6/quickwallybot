@@ -1,6 +1,6 @@
-import userService from '../../services/userService';
-import walletService from '../../services/walletService';
-import tranzitpayService from '../../services/tranzitpayService';
+const userService = require('../../services/userService');
+const walletService = require('../../services/walletService');
+const tranzitpayService = require('../../services/tranzitpayService');
 
 const networks = ['MTN', 'Airtel', 'Glo', '9mobile'];
 const userServices = new userService();
@@ -71,7 +71,7 @@ async function processAirtimePurchase(bot, chatId, userId, network, phoneNumber,
     const updatedWallet = await walletServices.getWallet(userId);
 
     await bot.sendMessage(chatId,
-      `Airtime purchased successfully!\n\n` +
+      `✅ Airtime purchased successfully!\n\n` +
       `Network: ${network}\n` +
       `Phone: ${phoneNumber}\n` +
       `Amount: ₦${parseFloat(amount).toFixed(2)}\n` +
@@ -79,7 +79,7 @@ async function processAirtimePurchase(bot, chatId, userId, network, phoneNumber,
     );
   } catch (error) {
     console.error('Error processing airtime purchase:', error);
-    await bot.sendMessage(chatId, 'Airtime purchase failed. Please try again.');
+    await bot.sendMessage(chatId, '❌ Airtime purchase failed. Please try again.');
   }
 }
 
@@ -186,7 +186,7 @@ async function processDataPurchase(bot, chatId, userId, network, planCode, price
     const updatedWallet = await walletServices.getWallet(userId);
 
     await bot.sendMessage(chatId,
-      `Data purchased successfully!\n\n` +
+      `✅ Data purchased successfully!\n\n` +
       `Network: ${network}\n` +
       `Plan: ${planCode}\n` +
       `Phone: ${phoneNumber}\n` +
@@ -195,7 +195,7 @@ async function processDataPurchase(bot, chatId, userId, network, planCode, price
     );
   } catch (error) {
     console.error('Error processing data purchase:', error);
-    await bot.sendMessage(chatId, 'Data purchase failed. Please try again.');
+    await bot.sendMessage(chatId, '❌ Data purchase failed. Please try again.');
   }
 }
 

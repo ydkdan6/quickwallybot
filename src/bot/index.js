@@ -4,8 +4,7 @@ require('dotenv').config();
 const handleStart = require('./handlers/startHandler');
 const handleMessage = require('./handlers/messageHandler');
 const handleCallbackQuery = require('./handlers/callbackHandler');
-import ReminderService from '../services/reminderService';
-
+const ReminderService = require('../services/reminderService');
 
 const reminderServices = new ReminderService();
 

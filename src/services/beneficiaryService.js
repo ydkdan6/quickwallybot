@@ -1,8 +1,9 @@
-import { createClient } from "@supabase/supabase-js";
+const { createClient } = require('@supabase/supabase-js');
+require('dotenv').config();
 
 class BeneficiaryService {
   constructor() {
-    // Create fresh Supabase client per instance
+    // Create Supabase client
     this.supabase = createClient(
       process.env.SUPABASE_URL,
       process.env.SUPABASE_SERVICE_KEY
@@ -81,5 +82,5 @@ class BeneficiaryService {
   }
 }
 
-// Export class, not instance
+// Export singleton instance (recommended)
 module.exports = BeneficiaryService;

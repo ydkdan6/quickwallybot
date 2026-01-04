@@ -1,7 +1,7 @@
-import userService from '../../services/userService';
-import walletService from '../../services/walletService';
-import beneficiaryService from '../../services/beneficiaryService';
-import tranzitpayService from '../../services/tranzitpayService';
+const userService = require('../../services/userService');
+const walletService = require('../../services/walletService');
+const beneficiaryService = require('../../services/beneficiaryService');
+const tranzitpayService = require('../../services/tranzitpayService');
 
 const userServices = new userService();
 const walletServices = new walletService();
@@ -89,8 +89,8 @@ async function processAirtimeSharing(bot, chatId, userId, recipientPhone, networ
     const updatedWallet = await walletServices.getWallet(userId);
 
     const successMsg = recipientName
-      ? `Airtime sent successfully to ${recipientName}!\n\n`
-      : `Airtime sent successfully!\n\n`;
+      ? `✅ Airtime sent successfully to ${recipientName}!\n\n`
+      : `✅ Airtime sent successfully!\n\n`;
 
     await bot.sendMessage(chatId,
       successMsg +
@@ -108,7 +108,7 @@ async function processAirtimeSharing(bot, chatId, userId, recipientPhone, networ
     );
   } catch (error) {
     console.error('Error processing airtime sharing:', error);
-    await bot.sendMessage(chatId, 'Failed to send airtime. Please try again.');
+    await bot.sendMessage(chatId, '❌ Failed to send airtime. Please try again.');
   }
 }
 
@@ -169,7 +169,7 @@ async function saveBeneficiary(bot, chatId, userId, phoneNumber, network, name) 
     await beneficiaryServices.addBeneficiary(userId, name, phoneNumber, network);
 
     await bot.sendMessage(chatId,
-      `${name} has been saved as a beneficiary!\n\n` +
+      `✅ ${name} has been saved as a beneficiary!\n\n` +
       `You can now quickly send airtime to them anytime.`
     );
   } catch (error) {

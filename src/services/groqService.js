@@ -1,4 +1,4 @@
-import Groq from "groq-sdk";
+const Groq = require("groq-sdk");
 
 class groqService {
   constructor() {

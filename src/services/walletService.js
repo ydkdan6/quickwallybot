@@ -1,5 +1,5 @@
-import { createClient } from '@supabase/supabase-js';
-import { nanoid } from 'nanoid';
+const { createClient } = require('@supabase/supabase-js');
+const { nanoid } = require('nanoid');
 
 class WalletService {
   constructor() {

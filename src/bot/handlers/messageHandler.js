@@ -1,5 +1,5 @@
-import userService from '../../services/userService';
-import groqService from '../../services/groqService';
+const userService = require('../../services/userService');
+const groqService = require('../../services/groqService');
 const { handleFundWallet, handleCheckBalance, handleTransactionHistory } = require('./walletHandler');
 const { handleBuyAirtime, handleBuyData } = require('./vtuHandler');
 const { handleShareAirtime, handleBeneficiaries } = require('./sharingHandler');
