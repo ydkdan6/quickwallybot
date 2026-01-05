@@ -44,7 +44,10 @@ form.addEventListener('submit', async (e) => {
   submitBtn.textContent = 'Creating Account...';
 
   try {
-    const response = await fetch('/api/register', {
+
+    const API_URL = 'https://quickwallybot.onrender.com';
+
+    const response = await fetch(`${API_URL}/api/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -80,5 +83,6 @@ form.addEventListener('submit', async (e) => {
     errorMessage.textContent = 'Network error. Please check your connection.';
     submitBtn.disabled = false;
     submitBtn.textContent = 'Create Account';
+    console.error('Registration error:', error); 
   }
 });

@@ -25,6 +25,11 @@ app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, '../../webapp/index.html'));
 });
 
+app.get('/api/register', (req, res) => {
+  res.send('POST to this endpoint to register a user');
+});
+
+
 app.get('/verify-pin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../webapp/verify-pin.html'));
 });
@@ -32,6 +37,11 @@ app.get('/verify-pin', (req, res) => {
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
+
+app.use(cors({
+  origin: ['https://quickwallybotty.vercel.app']  // frontend URL
+}));
+
 
 app.listen(PORT, () => {
   console.log(`API server running on port ${PORT}`);
