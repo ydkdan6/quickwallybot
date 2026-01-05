@@ -113,40 +113,33 @@ async function handleBuyData(bot, msg) {
 
 async function showDataPlans(bot, chatId, network) {
   try {
+    await bot.sendMessage(chatId, `Fetching ${network} data plans...`);
+    
     const plans = await tranzitpayServices.getDataPlans(network);
 
-    let message = `📶 ${network} Data Plans\n\n`;
+    if (!plans || plans.length === 0) {
+      await bot.sendMessage(chatId, 
+        `No data plans available for ${network} at the moment. Please try again later.`
+      );
+      return;
+    }
 
-    const buttons = plans.slice(0, 10).map(plan => [{
-      text: `${plan.name} - ₦${plan.price}`,
-      callback_data: `buy_data_${network}_${plan.code}_${plan.price}`
+    // Display real plans from API
+    const buttons = plans.slice(0, 15).map(plan => [{
+      text: `${plan.name} - ₦${parseFloat(plan.price).toFixed(2)}`,
+      callback_data: `buy_data_${network}_${plan.planID}_${plan.price}`
     }]);
 
     await bot.sendMessage(chatId, message, {
-      reply_markup: {
-        inline_keyboard: buttons
-      }
+      reply_markup: { inline_keyboard: buttons }
     });
   } catch (error) {
-    console.error('Error showing data plans:', error);
-
-    const samplePlans = [
-      { name: '1GB', code: '1GB', price: 300 },
-      { name: '2GB', code: '2GB', price: 550 },
-      { name: '5GB', code: '5GB', price: 1300 },
-      { name: '10GB', code: '10GB', price: 2500 }
-    ];
-
-    const buttons = samplePlans.map(plan => [{
-      text: `${plan.name} - ₦${plan.price}`,
-      callback_data: `buy_data_${network}_${plan.code}_${plan.price}`
-    }]);
-
-    await bot.sendMessage(chatId, `📶 ${network} Data Plans\n\nSelect a plan:`, {
-      reply_markup: {
-        inline_keyboard: buttons
-      }
-    });
+    // Show error, no fallback to mock data
+    await bot.sendMessage(chatId, 
+      `Unable to fetch ${network} data plans at the moment.\n\n` +
+      `Error: ${error.message}\n\n` +
+      `Please try again later or contact support.`
+    );
   }
 }
 

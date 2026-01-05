@@ -7,6 +7,7 @@ require('dotenv').config();
 const registerRoute = require('./routes/register');
 const verifyPinRoute = require('./routes/verifyPin');
 const webhookRoute = require('./routes/webhook');
+const paymentRoute = require('./routes/payment');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,6 +21,7 @@ app.use(express.static(path.join(__dirname, '../../webapp')));
 app.use('/api/register', registerRoute);
 app.use('/api/verify-pin', verifyPinRoute);
 app.use('/api/webhook', webhookRoute);
+app.use('/api/payment', paymentRoute);
 
 app.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, '../../webapp/index.html'));

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Processing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 30px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            display: none;
+        }
+
+        .success-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .checkmark {
+            stroke: #10b981;
+            stroke-width: 3;
+            stroke-linecap: round;
+            fill: none;
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: draw 0.8s ease-out forwards;
+        }
+
+        @keyframes draw {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        .error-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            display: none;
+            color: #ef4444;
+            font-size: 60px;
+            line-height: 80px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #6b7280;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .amount {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 20px 0;
+        }
+
+        .close-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: none;
+        }
+
+        .close-button:hover {
+            background: #5568d3;
+        }
+
+        .close-button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner" id="spinner"></div>
+        
+        <div class="success-icon" id="successIcon">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="#e5e7eb" stroke-width="3"/>
+                <path class="checkmark" d="M25,50 L40,65 L75,30"/>
+            </svg>
+        </div>
+
+        <div class="error-icon" id="errorIcon">✕</div>
+
+        <h1 id="title">Processing Payment...</h1>
+        <p id="message">Please wait while we verify your payment.</p>
+        <div class="amount" id="amount" style="display: none;"></div>
+        <button class="close-button" id="closeButton">Close Window</button>
+    </div>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const reference = urlParams.get('reference');
+
+        async function verifyPayment() {
+            try {
+                const response = await fetch(`/api/payment/verify?reference=${reference}`);
+                const data = await response.json();
+
+                document.getElementById('spinner').style.display = 'none';
+
+                if (data.success) {
+                    // Success
+                    document.getElementById('successIcon').style.display = 'block';
+                    document.getElementById('title').textContent = 'Payment Successful!';
+                    document.getElementById('message').textContent = 'Your wallet has been funded successfully.';
+                    document.getElementById('amount').textContent = `₦${parseFloat(data.amount).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    document.getElementById('amount').style.display = 'block';
+
+                    // Send success message to Telegram
+                    tg.sendData(JSON.stringify({
+                        action: 'payment_success',
+                        amount: data.amount,
+                        reference: reference
+                    }));
+
+                    // Auto-close after 3 seconds
+                    setTimeout(() => {
+                        tg.close();
+                    }, 3000);
+                } else {
+                    // Failed
+                    document.getElementById('errorIcon').style.display = 'block';
+                    document.getElementById('title').textContent = 'Payment Failed';
+                    document.getElementById('message').textContent = data.message || 'Something went wrong. Please try again.';
+                    document.getElementById('closeButton').style.display = 'block';
+                }
+            } catch (error) {
+                // Error
+                document.getElementById('spinner').style.display = 'none';
+                document.getElementById('errorIcon').style.display = 'block';
+                document.getElementById('title').textContent = 'Verification Failed';
+                document.getElementById('message').textContent = 'Unable to verify payment. Please contact support if money was deducted.';
+                document.getElementById('closeButton').style.display = 'block';
+            }
+        }
+
+        document.getElementById('closeButton').addEventListener('click', () => {
+            tg.close();
+        });
+
+        // Start verification
+        if (reference) {
+            verifyPayment();
+        } else {
+            document.getElementById('spinner').style.display = 'none';
+            document.getElementById('errorIcon').style.display = 'block';
+            document.getElementById('title').textContent = 'Invalid Reference';
+            document.getElementById('message').textContent = 'No payment reference found.';
+            document.getElementById('closeButton').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

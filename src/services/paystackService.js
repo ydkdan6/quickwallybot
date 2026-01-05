@@ -24,7 +24,7 @@ class PaystackService {
           email: email,
           amount: amountInKobo,
           reference: reference,
-          callback_url: `${process.env.WEBAPP_URL}/payment/callback`
+          callback_url: `https://quickwallybot.onrender.com/payment-callback.html?reference=${reference}`
         },
         {
           headers: {
