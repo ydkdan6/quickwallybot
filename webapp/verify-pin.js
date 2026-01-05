@@ -93,7 +93,10 @@ form.addEventListener('submit', async (e) => {
       requestBody.amount = urlParams.get('amount');
     }
 
-    const response = await fetch('/api/verify-pin', {
+
+    const API_URL = 'https://quickwallybot.onrender.com';
+
+    const response = await fetch(`${API_URL}/api/verify-pin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
