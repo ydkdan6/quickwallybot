@@ -2,8 +2,9 @@
 
 const express = require('express');
 const router = express.Router();
-const PaystackService = require('../services/paystackService');
-const WalletService = require('../services/walletService');
+const  PaystackService = require('../../services/paystackService');
+const WalletService = require('../../services/walletService');
+
 
 const paystackService = new PaystackService();
 const walletService = new WalletService();
